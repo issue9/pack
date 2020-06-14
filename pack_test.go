@@ -14,6 +14,13 @@ func TestString(t *testing.T) {
 	str := "这是字符串的测试`"
 	err := File(str, "testdata", "String", "请勿修改", "pack", "./testdata/string.go")
 	a.NotError(err).FileExists("./testdata/string.go")
+
+	v, err := String(&str)
+	a.NotError(err).NotEmpty(v)
+
+	var v2 string
+	a.NotError(Unpack(v, &v2))
+	a.Equal(v2, str)
 }
 
 type obj struct {

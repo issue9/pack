@@ -70,7 +70,7 @@ func String(v interface{}) (string, error) {
 	return base64Encoding.EncodeToString(buf.Bytes()), nil
 }
 
-// Unpack 用于解压由 Pack 输出的内容
+// Unpack 用于解压由 Bytes 或是 String 打包的内容
 func Unpack(buffer string, v interface{}) error {
 	buf, err := base64Encoding.DecodeString(buffer)
 	if err != nil {
