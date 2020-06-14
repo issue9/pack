@@ -5,4 +5,4 @@ require (
 	github.com/issue9/errwrap v0.1.1
 )
 
-go 1.13
+go 1.11
