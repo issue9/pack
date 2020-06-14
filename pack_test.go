@@ -25,7 +25,7 @@ func TestObjet(t *testing.T) {
 	a := assert.New(t)
 
 	o := &obj{ID: 1, Name: "111"}
-	err := File(o, "testdata", "String", "请勿修改", "pack", "./testdata/obj.go")
+	err := File(o, "testdata", "Object", "请勿修改", "pack", "./testdata/obj.go")
 	a.NotError(err).FileExists("./testdata/obj.go")
 
 	objs := []*obj{
@@ -33,6 +33,6 @@ func TestObjet(t *testing.T) {
 		{ID: 2, Name: "name2"},
 		{ID: 3, Name: "name3"},
 	}
-	err = File(objs, "testdata", "String", "请勿修改", "pack", "./testdata/objs.go")
+	err = File(objs, "testdata", "Objects", "请勿修改", "pack", "./testdata/objs.go")
 	a.NotError(err).FileExists("./testdata/objs.go")
 }
