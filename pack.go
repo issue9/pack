@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 
+// Package pack 用于将数据资源打包为 Go 文件
 package pack
 
 import (
@@ -21,6 +22,14 @@ var base64Encoding = base64.StdEncoding
 // fileHeader 指定了文件头，如果为空，则不会输出文件内容；
 // tag 指定了 // +build 指令下的标签，如果为空则不生成该指令；
 func File(v interface{}, pkgName, varName, fileHeader, tag, path string) error {
+	value, err := String(v)
+	if err != nil {
+		return err
+	}
+	return writeToFile(value, pkgName, varName, fileHeader, tag, path)
+}
+
+func writeToFile(value string, pkgName, varName, fileHeader, tag, path string) error {
 	w := errwrap.Buffer{}
 
 	if fileHeader != "" {
@@ -31,12 +40,8 @@ func File(v interface{}, pkgName, varName, fileHeader, tag, path string) error {
 		w.Printf("// +build %s \n\n", tag)
 	}
 
-	bs, err := Bytes(v)
-	if err != nil {
-		return err
-	}
 	w.Printf("package %s \n\n", pkgName).
-		Printf("const %s = `%s`\n", varName, string(bs))
+		Printf("const %s = `%s`\n", varName, value)
 
 	if w.Err != nil {
 		return w.Err
@@ -71,8 +76,8 @@ func String(v interface{}) (string, error) {
 }
 
 // Unpack 用于解压由 Bytes 或是 String 打包的内容
-func Unpack(buffer string, v interface{}) error {
-	buf, err := base64Encoding.DecodeString(buffer)
+func Unpack(data string, v interface{}) error {
+	buf, err := base64Encoding.DecodeString(data)
 	if err != nil {
 		return err
 	}

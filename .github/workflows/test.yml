@@ -25,7 +25,7 @@ jobs:
 
       - name: Vet
         run: go vet -v ./...
-        
+
       - name: Test
         run: go test -v -coverprofile='coverage.txt' -covermode=atomic ./...
 
