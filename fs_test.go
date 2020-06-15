@@ -94,6 +94,9 @@ func TestDir(t *testing.T) {
 	srv.Get("/index.html").
 		Do().
 		Status(http.StatusOK)
+	srv.Get("/").
+		Do().
+		Status(http.StatusOK)
 
 	srv.Get("/not-exists").
 		Do().
