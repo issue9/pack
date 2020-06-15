@@ -18,6 +18,7 @@ var base64Encoding = base64.StdEncoding
 
 // File 将对象 v 打包成一个 Go 文件内容中
 //
+// v 需要打包的对象，其中所有的公开字段都会被打包；
 // pkgName 和 varName 分别指定包名和变量名；
 // fileHeader 指定了文件头，如果为空，则不会输出文件内容；
 // tag 指定了 // +build 指令下的标签，如果为空则不生成该指令；
@@ -55,6 +56,8 @@ func writeToFile(value string, pkgName, varName, fileHeader, tag, path string) e
 }
 
 // Bytes 将 v 打包成一份合法的 Go []byte 类型
+//
+// v 需要打包的对象，其中所有的公开字段都会被打包。
 func Bytes(v interface{}) ([]byte, error) {
 	str, err := String(v)
 	if err != nil {
@@ -64,6 +67,8 @@ func Bytes(v interface{}) ([]byte, error) {
 }
 
 // String 将 v 打包成一份合法的 Go 字符串
+//
+// v 需要打包的对象，其中所有的公开字段都会被打包。
 func String(v interface{}) (string, error) {
 	buf := new(bytes.Buffer)
 	g := gob.NewEncoder(buf)
